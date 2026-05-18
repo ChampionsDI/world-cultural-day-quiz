@@ -340,29 +340,7 @@
       <p id="translate-sub">This quiz is available in multiple languages. Choose yours to continue.</p>
     </div>
     <div id="translate-selector">
-      <select id="custom-lang-select" onchange="goToLang(this.value)">
-        <option value="" disabled selected>Choose your language</option>
-        <option value="en">English (original)</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-        <option value="pt">Português</option>
-        <option value="nl">Nederlands</option>
-        <option value="pl">Polski</option>
-        <option value="tr">Türkçe</option>
-        <option value="ro">Română</option>
-        <option value="cs">Čeština</option>
-        <option value="hu">Magyar</option>
-        <option value="sv">Svenska</option>
-        <option value="da">Dansk</option>
-        <option value="el">Ελληνικά</option>
-        <option value="ru">Русский</option>
-        <option value="zh-CN">中文</option>
-        <option value="ja">日本語</option>
-        <option value="ko">한국어</option>
-        <option value="ar">العربية</option>
-      </select>
+      <div id="google_translate_element"></div>
     </div>
   </div>
 </div>
@@ -406,10 +384,14 @@
     max-width: 360px;
   }
   #translate-selector { flex-shrink: 0; }
-  #custom-lang-select {
+
+  /* Style the Google Translate widget container */
+  #google_translate_element { display: inline-block; }
+  .goog-te-gadget { font-family: var(--font) !important; color: transparent !important; font-size: 0 !important; }
+  .goog-te-gadget select {
     appearance: none;
     -webkit-appearance: none;
-    background: var(--white);
+    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 1.1rem center;
     color: var(--black);
     border: none;
     border-radius: 980px;
@@ -420,36 +402,33 @@
     cursor: pointer;
     outline: none;
     min-width: 220px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1.1rem center;
   }
-  #custom-lang-select:hover { opacity: 0.85; }
+  .goog-te-gadget select:hover { opacity: 0.85; }
+
+  /* Hide Google branding bar */
   .goog-te-banner-frame { display: none !important; }
   body { top: 0 !important; }
-  .skiptranslate { display: none !important; }
+  .skiptranslate > span { display: none !important; }
 
   @media (max-width: 600px) {
     #translate-inner { flex-direction: column; align-items: flex-start; }
     #translate-selector { width: 100%; }
-    #custom-lang-select { width: 100%; }
+    .goog-te-gadget select { width: 100%; }
   }
 </style>
 
-<script>
-  var pageUrl = window.location.href.split('?')[0];
-
-  function goToLang(lang) {
-    if (!lang) return;
-    if (lang === 'en') {
-      window.location.href = pageUrl;
-      return;
-    }
-    // Use Google Translate proxy — most reliable method, no JS restrictions
-    var translated = 'https://translate.google.com/translate?sl=en&tl=' + lang + '&u=' + encodeURIComponent(pageUrl);
-    window.location.href = translated;
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'es,fr,de,it,pt,nl,pl,tr,ro,cs,hu,sv,da,el,ru,zh-CN,ja,ko,ar',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
   }
 </script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
 
 <div class="quiz-intro">
