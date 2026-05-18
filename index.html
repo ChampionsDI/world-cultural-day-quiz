@@ -336,11 +336,14 @@
   <div id="translate-inner">
     <div id="translate-text">
       <p id="translate-eyebrow">Before you start</p>
-      <h2 id="translate-heading">Select your language</h2>
-      <p id="translate-sub">This quiz is available in multiple languages. Choose yours to continue.</p>
+      <h2 id="translate-heading">¿Prefieres leerlo en otro idioma?</h2>
+      <p id="translate-sub">Si lo necesitas, puedes activar la traducción automática de esta página. Al pulsar el botón, se activará el traductor de Google. Selecciona el idioma con el que te sientas más cómodo en la barra superior.</p>
     </div>
     <div id="translate-selector">
       <div id="google_translate_element"></div>
+      <button id="translate-btn" onclick="document.querySelector('.goog-te-combo') && document.querySelector('.goog-te-combo').focus()">
+        Translate this page ↓
+      </button>
     </div>
   </div>
 </div>
@@ -385,35 +388,41 @@
   }
   #translate-selector { flex-shrink: 0; }
 
-  /* Style the Google Translate widget container */
-  #google_translate_element { display: inline-block; }
-  .goog-te-gadget { font-family: var(--font) !important; color: transparent !important; font-size: 0 !important; }
-  .goog-te-gadget select {
-    appearance: none;
-    -webkit-appearance: none;
-    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 1.1rem center;
+  /* Hide the Google widget visually but keep it active */
+  #google_translate_element {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* Our custom button */
+  #translate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--white);
     color: var(--black);
     border: none;
     border-radius: 980px;
-    padding: 0.75rem 2.5rem 0.75rem 1.4rem;
+    padding: 0.75rem 1.6rem;
     font-size: 0.9rem;
     font-family: var(--font);
     font-weight: 500;
     cursor: pointer;
-    outline: none;
-    min-width: 220px;
+    transition: opacity 0.18s ease;
+    white-space: nowrap;
   }
-  .goog-te-gadget select:hover { opacity: 0.85; }
+  #translate-btn:hover { opacity: 0.82; }
 
-  /* Hide Google branding bar */
-  .goog-te-banner-frame { display: none !important; }
-  body { top: 0 !important; }
-  .skiptranslate > span { display: none !important; }
+  /* Keep Google bar visible when active */
+  .goog-te-banner-frame { display: block !important; }
+  body { top: 0; }
 
   @media (max-width: 600px) {
     #translate-inner { flex-direction: column; align-items: flex-start; }
-    #translate-selector { width: 100%; }
-    .goog-te-gadget select { width: 100%; }
+    #translate-btn { width: 100%; justify-content: center; }
   }
 </style>
 
@@ -423,9 +432,22 @@
       pageLanguage: 'en',
       includedLanguages: 'es,fr,de,it,pt,nl,pl,tr,ro,cs,hu,sv,da,el,ru,zh-CN,ja,ko,ar',
       layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-      autoDisplay: false
+      autoDisplay: true
     }, 'google_translate_element');
   }
+
+  // When button clicked, show and trigger the Google Translate bar
+  document.getElementById('translate-btn').addEventListener('click', function() {
+    var combo = document.querySelector('.goog-te-combo');
+    if (combo) {
+      combo.style.display = 'block';
+      combo.focus();
+      combo.size = combo.options.length;
+    } else {
+      // If widget not loaded yet, scroll to top where bar appears
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
