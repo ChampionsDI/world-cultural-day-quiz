@@ -385,14 +385,29 @@
   }
   #translate-selector { flex-shrink: 0; }
 
-  /* Hide the Google widget visually but keep it active */
-  #google_translate_element {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
+  /* Show Google widget inline */
+  #google_translate_element { display: inline-block; }
+  .goog-te-gadget {
+    font-family: var(--font) !important;
+    font-size: 0 !important;
+    color: transparent !important;
   }
+  .goog-te-gadget .goog-te-combo {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 1.1rem center;
+    color: var(--black);
+    border: none;
+    border-radius: 980px;
+    padding: 0.75rem 2.5rem 0.75rem 1.4rem;
+    font-size: 0.9rem;
+    font-family: var(--font);
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    min-width: 220px;
+  }
+  .goog-te-gadget .goog-te-combo:hover { opacity: 0.85; }
 
 
 
