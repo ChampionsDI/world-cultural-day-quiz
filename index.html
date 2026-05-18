@@ -336,14 +336,11 @@
   <div id="translate-inner">
     <div id="translate-text">
       <p id="translate-eyebrow">Before you start</p>
-      <h2 id="translate-heading">¿Prefieres leerlo en otro idioma?</h2>
-      <p id="translate-sub">Si lo necesitas, puedes activar la traducción automática de esta página. Al pulsar el botón, se activará el traductor de Google. Selecciona el idioma con el que te sientas más cómodo en la barra superior.</p>
+      <h2 id="translate-heading">Would you prefer to read this in another language?</h2>
+      <p id="translate-sub">If you need to, you can enable automatic translation for this page. Clicking the button will launch Google Translate. Select the language you're most comfortable with from the top bar.</p>
     </div>
     <div id="translate-selector">
       <div id="google_translate_element"></div>
-      <button id="translate-btn" onclick="document.querySelector('.goog-te-combo') && document.querySelector('.goog-te-combo').focus()">
-        Translate this page ↓
-      </button>
     </div>
   </div>
 </div>
@@ -397,24 +394,7 @@
     overflow: hidden;
   }
 
-  /* Our custom button */
-  #translate-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--white);
-    color: var(--black);
-    border: none;
-    border-radius: 980px;
-    padding: 0.75rem 1.6rem;
-    font-size: 0.9rem;
-    font-family: var(--font);
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.18s ease;
-    white-space: nowrap;
-  }
-  #translate-btn:hover { opacity: 0.82; }
+
 
   /* Keep Google bar visible when active */
   .goog-te-banner-frame { display: block !important; }
@@ -436,18 +416,7 @@
     }, 'google_translate_element');
   }
 
-  // When button clicked, show and trigger the Google Translate bar
-  document.getElementById('translate-btn').addEventListener('click', function() {
-    var combo = document.querySelector('.goog-te-combo');
-    if (combo) {
-      combo.style.display = 'block';
-      combo.focus();
-      combo.size = combo.options.length;
-    } else {
-      // If widget not loaded yet, scroll to top where bar appears
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
+
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
